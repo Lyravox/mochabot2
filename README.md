@@ -2,4 +2,4 @@
 
 A Discord bot developed by @lyravox (Aka Juniper)!
 
-Mocha is cool :3
+Mochabot is cool :3
