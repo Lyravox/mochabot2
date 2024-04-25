@@ -2,6 +2,7 @@ import nextcord
 from nextcord.ext import commands
 from nextcord import Interaction, Member, SlashOption
 from datetime import datetime
+import random
 
 class Information(commands.Cog):
     def __init__(self, bot):
@@ -74,6 +75,29 @@ class Information(commands.Cog):
         
         await interaction.response.send_message(embed=embed)
         
+    # Avatar command
+    @nextcord.slash_command(description="Provides a avatar of a specfic user.")
+    async def avatar(self, interaction: Interaction, member: Member = None):
+        
+        if member is None:
+            member = interaction.user
+                    
+        if member.avatar:
+            
+            url = member.avatar.url
+            name = member.name
+          
+            embed = nextcord.Embed(title=f"{name}'s Avatar", color=0x703c2f)
+        
+            embed.set_image(url=url)
+        
+            await interaction.response.send_message(embed=embed)
+
+        else:
+          
+          await interaction.response.send_message("That user dose not have a avatar!")          
+      
+    # Emoji command
     
 def setup(bot):
     bot.add_cog(Information(bot))
