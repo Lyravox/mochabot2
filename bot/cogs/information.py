@@ -98,6 +98,17 @@ class Information(commands.Cog):
           await interaction.response.send_message("That user dose not have a avatar!")          
       
     # Emoji command
+    @nextcord.slash_command(description="Picks a random number between two specified numbers.")
+    async def random(self, interaction: Interaction, lower: int, upper: int):
+        
+        if lower >= upper:
+            
+            await interaction.response.send_message("The firs number must be less than the second number.")
+            return
+        
+        result = random.randint(lower, upper)
+        
+        await interaction.response.send_message(f"Your random number is: {result}")
     
 def setup(bot):
     bot.add_cog(Information(bot))
