@@ -7,26 +7,24 @@ import aiohttp
 
 load_dotenv()
 
-cat_api = os.getenv("CAT_KEY")
-
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
             
-    @nextcord.slash_command("Sends a random cat image.")
+    @nextcord.slash_command(description="Sends a random cat image.")
     async def cat(self, interaction: Interaction):
         
         async with aiohttp.ClientSession() as session:
             async with session.get("https://api.thecatapi.com/v1/images/search") as response:
         
-                if response == 200:
+                if response.status == 200:
         
                     data = await response.json()
-                    url = data[0]['url']
+                    cat_url = data[0]['url']
               
                     embed = nextcord.Embed(title="Random Cat", color=0x703c2f)
 
-                    embed.set_image(url=url)
+                    embed.set_image(url=cat_url)
                     
                     await interaction.response.send_message(embed=embed)
                     
