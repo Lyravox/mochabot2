@@ -34,6 +34,17 @@ class Information(commands.Cog):
         
         await interaction.response.send_message(f"Pong! My latency is {latency}ms.")
         
+    # Rules command
+    @nextcord.slash_command(description="Provides server rules.")
+    async def rules(self, interaction: Interaction):
+        
+        embed = nextcord.Embed(title="Rules", color=0x703c2f)
+        
+        embed.set_thumbnail(url=interaction.guild.icon.url)
+        embed.add_field(name=" ", value="You can find server rules at <#1046164961845592074>!")
+                
+        await interaction.response.send_message(embed=embed)
+        
     # Server information command
     @nextcord.slash_command(description="Provides server info.")
     async def server(self, interaction: Interaction):
