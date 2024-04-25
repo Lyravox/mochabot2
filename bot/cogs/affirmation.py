@@ -28,7 +28,7 @@ class Affirmation(commands.Cog):
         
                 return None
             
-    @tasks.loop(time=time(hour=23, minute=0, second=0))
+    @tasks.loop(hours=24)
     async def daily_affirmation(self):
         
         channel = self.bot.get_channel(self.channel_id)
@@ -39,9 +39,8 @@ class Affirmation(commands.Cog):
     
             if affirmation:
                 
-                embed = nextcord.Embed(title="Todays Affirmation", color=0x703c2f)
+                embed = nextcord.Embed(title="Todays Affirmation", color=0x703c2f, description=affirmation)
         
-                embed.add_field(name="", value=affirmation)
                 embed.set_thumbnail(url="https://i.ibb.co/4SfxXBy/affirmation.jpg")
         
                 await channel.send(f"<@&{self.affirmation_ping}>", embed=embed)
