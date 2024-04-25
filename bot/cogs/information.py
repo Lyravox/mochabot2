@@ -32,17 +32,18 @@ class Information(commands.Cog):
         
         latency = int(self.bot.latency * 1000)
         
-        await interaction.response.send_message(f"Pong! My latency is {latency}ms.")
+        embed = nextcord.Embed(title="Pong", color=0x703c2f, description=f"My latency is {latency}ms!")
+        
+        await interaction.response.send_message(embed=embed)
         
     # Rules command
     @nextcord.slash_command(description="Provides server rules.")
     async def rules(self, interaction: Interaction):
         
-        embed = nextcord.Embed(title="Rules", color=0x703c2f)
+        embed = nextcord.Embed(title="Rules", color=0x703c2f, description="You can find server rules at <#1046164961845592074>!")
         
         embed.set_thumbnail(url=interaction.guild.icon.url)
-        embed.add_field(name=" ", value="You can find server rules at <#1046164961845592074>!")
-                
+                        
         await interaction.response.send_message(embed=embed)
         
     # Server information command
@@ -109,6 +110,24 @@ class Information(commands.Cog):
           await interaction.response.send_message("That user dose not have a avatar!")          
       
     # Emoji command
+    @nextcord.slash_command(description="Returns a list of server emojis")
+    async def emojis(self, interaction: Interaction):
+    
+        emojis = interaction.guild.emojis
+    
+        if not emojis:
+    
+            await interaction.response.send_message("No custom emojis found in this guild.")
+    
+        list = [str(emoji) for emoji in emojis] 
+    
+        message = " ".join(list)
+    
+        embed = nextcord.Embed(title="Emoji List", color=0x703c2f, description=message)
+        
+        await interaction.response.send_message(embed=embed)
+      
+    # Random command
     @nextcord.slash_command(description="Picks a random number between two specified numbers.")
     async def random(self, interaction: Interaction, lower: int, upper: int):
         
