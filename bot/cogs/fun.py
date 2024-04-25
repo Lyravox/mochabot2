@@ -10,6 +10,8 @@ load_dotenv()
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+     
+    # Cat command
             
     @nextcord.slash_command(description="Sends a random cat image.")
     async def cat(self, interaction: Interaction):
@@ -20,17 +22,39 @@ class Fun(commands.Cog):
                 if response.status == 200:
         
                     data = await response.json()
-                    cat_url = data[0]['url']
+                    url = data[0]['url']
               
                     embed = nextcord.Embed(title="Random Cat", color=0x703c2f)
 
-                    embed.set_image(url=cat_url)
+                    embed.set_image(url=url)
                     
                     await interaction.response.send_message(embed=embed)
                     
                 else:
                     
                     await interaction.response.send_message("Could not fetch a cat image D:")         
+            
+    # Duck command
+    @nextcord.slash_command(description="Sends a random duck image.")
+    async def duck(self, interaction: Interaction):
+        
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://random-d.uk/api/random") as response:
+                
+                if response.status == 200:
+                    
+                    data = await response.json()
+                    url =  data['url']
+                    
+                    embed = nextcord.Embed(title="Random Duck", color=0x703c2f)
+                    
+                    embed.set_image(url=url)
+                    
+                    await interaction.response.send_message(embed=embed)
+                    
+                else:
+                    
+                    await interaction.response.send_message("Could not fetch a duck image D:")
             
 def setup(bot):
     bot.add_cog(Fun(bot))
